@@ -20,7 +20,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t pm-uii:latest .
+          docker build -t pm-ui:latest .
 
       - name: Run Tests
         run: |
