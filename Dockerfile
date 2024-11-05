@@ -10,11 +10,14 @@ COPY . .
 
 RUN npm run build
 
-FROM nginx:alpine
+FROM node:alpine
+
+# Install a lightweight static file server
+RUN npm install -g serve
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
-
+# Use the static file server to serve the build files
+CMD ["serve", "-s", "dist"]
