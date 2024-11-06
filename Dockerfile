@@ -12,12 +12,16 @@ RUN npm run build
 
 FROM node:alpine
 
-# Install a lightweight static file server
+# Set the working directory for the production image
+WORKDIR /app
+
+# Install a static server to serve the build files
 RUN npm install -g serve
 
-COPY --from=build /app/dist /usr/share/nginx/html
+# Copy the build files from the build stage
+COPY --from=build /app/dist /app/dist
 
-EXPOSE 80
+EXPOSE 3000
 
 # Use the static file server to serve the build files
 CMD ["serve", "-s", "dist"]
