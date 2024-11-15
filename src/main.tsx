@@ -1,25 +1,48 @@
-import { StrictMode } from 'react'
+import { StrictMode, useMemo } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
 import { ApolloProvider } from '@apollo/client'
-import { BrowserRouter, Route } from 'react-router-dom'
-import client from './apollo'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import createApolloClient from './apollo'
+import WelcomePage from './pages/Welcome'
+import useAuth from './hooks/useAuth'
+
 
 function ShellElement({ title }: { title: string }) {
   return <div>{title}</div>
 }
 
+
+function App(){
+
+  const auth = useAuth()
+  const client = useMemo(() => {
+    if(!auth.ready) return null
+
+    return createApolloClient(auth)
+
+  }, [auth])
+
+  if (!client) return 'Loading...'
+
+  return (
+    <ApolloProvider client={client}>
+      <StrictMode>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<WelcomePage />} />
+            <Route path='/projects' element={<ShellElement title='Projects'/>} />
+            <Route path='/tasks' element={<ShellElement title='Tasks'/>} />
+            <Route path='/dashboard' element={<ShellElement title='Dashboard'/>} />
+            <Route path='/profile' element={<ShellElement title='Profile'/>} />
+            <Route path='*' element={<ShellElement title='Route Not Found'/>} />
+          </Routes>
+        </BrowserRouter>
+      </StrictMode>
+    </ApolloProvider>
+  )
+}
+
 createRoot(document.getElementById('root')!).render(
-  <ApolloProvider client={client}>
-    <StrictMode>
-      <BrowserRouter>
-        <Route path='/' element={<App />} />
-        <Route path='/projects' element={<ShellElement title='Projects'/>} />
-        <Route path='/tasks' element={<ShellElement title='Tasks'/>} />
-        <Route path='/profile' element={<ShellElement title='Profile'/>} />
-        <Route path='*' element={<ShellElement title='Route Not Found'/>} />
-      </BrowserRouter>
-    </StrictMode>
-  </ApolloProvider>,
+  <App />,
 )
