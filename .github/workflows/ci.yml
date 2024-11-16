@@ -18,14 +18,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Build Docker image
-        run: |
-          docker build -t pm-uii:latest .
-
       - name: Run Tests
         run: |
-          echo "Starting a new container..."
-          docker run --rm -d --name pm-ui pm-ui:latest
           echo "Running tests..."
           docker exec pm-ui npm test
           docker stop pm-ui
