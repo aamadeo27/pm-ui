@@ -1,5 +1,6 @@
-import { HttpLink, ApolloClient, from, InMemoryCache } from '@apollo/client'
+import { HttpLink, ApolloClient, from, InMemoryCache, ApolloLink } from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
+import { AuthTokens } from './hooks/useAuth'
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if(graphQLErrors) {
@@ -14,11 +15,28 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 })
 
 const httpLink = new HttpLink({
-  uri: `http://localhost:3000/graphql`
+  uri: `http://localhost:3000/graphql`,
+  credentials: 'include',
 })
 
-export default new ApolloClient({
-  link: from([errorLink, httpLink]),
-  cache: new InMemoryCache()
-})
+export default function createClient(auth: AuthTokens){
+  const authLink = new ApolloLink((operation, forward) => {
+    
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        ...headers,
+        "X-CSRF-TOKEN": auth.csrf,
+        Authorization: auth.jwt ? `Bearer ${auth.jwt}` : undefined,
+      },
+    }));
+    return forward(operation);
+  })
+      
+
+  return new ApolloClient({
+    link: from([errorLink, authLink, httpLink]),
+    cache: new InMemoryCache(),
+    credentials: 'include',
+  })
+}
 
