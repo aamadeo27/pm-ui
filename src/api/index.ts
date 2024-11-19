@@ -7,14 +7,13 @@ const client = axios.create({
   }
 })
 
-export const login = async (csrf: string, email: string, password: string) => {
+export const login = async (email: string, password: string) => {
   const response = await client.post('/auth', {
     email,
     password
   }, {
     headers: {
       "Content-Type": "application/json",
-      "X-Csrf-Token": csrf,
     }
   })
 

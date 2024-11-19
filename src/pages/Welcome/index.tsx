@@ -10,7 +10,7 @@ export default function WelcomePage(){
   const logoSize = mode === 'Landing' ? 'w-80' : 'w-40'
   const titleSize = mode === 'Landing' ? 'text-8xl' : 'text-6xl'
 
-  return <div className="bg-slate-800 w-[100vw] h-[100vh] py-20 text-white">
+  return <div className="bg-slate-800 w-screen h-screen text-white overflow-y-scroll">
     <div className="flex flex-col mx-auto w-96 h-full">
       <div className={classNames('mx-auto py-10', logoSize)}>
         <img src="/logo.png"/>

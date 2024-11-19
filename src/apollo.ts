@@ -25,8 +25,7 @@ export default function createClient(auth: AuthTokens){
     operation.setContext(({ headers = {} }) => ({
       headers: {
         ...headers,
-        "X-CSRF-TOKEN": auth.csrf,
-        Authorization: auth.jwt ? `Bearer ${auth.jwt}` : undefined,
+        ...( auth.jwt ? { Authorization: `Bearer ${auth.jwt}` } : {}),
       },
     }));
     return forward(operation);

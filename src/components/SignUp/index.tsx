@@ -64,7 +64,7 @@ export default function SignUp({ onCancel, onSuccess }: Props){
       setErrors([(error as Error).message])
     }
 
-  }, [errors, formData])
+  }, [errors, formData, createUser, onSuccess])
 
   const onCancelForm = useCallback(() => {
     setFormData(EMPTY_FORM)
@@ -72,15 +72,15 @@ export default function SignUp({ onCancel, onSuccess }: Props){
   }, [onCancel])
 
   return <form onSubmit={onSubmit}>
-    <div className="flex flex-col p-5 gap-4">
+    <div className="flex flex-col p-5 gap-4 h-full">
       <div className="text-4xl text-center w-full my-4">
         Sign Up
       </div>
     
-      <TextField name='Name' value={formData.name} onChange={onChange('name')} />
-      <TextField name='Email' value={formData.email} onChange={onChange('email')} />
-      <TextField name='Password' value={formData.password} onChange={onChange('password')} hide/>
-      <TextField name='Confirm Password' value={formData.password2} onChange={onChange('password2')} hide/>
+      <TextField name='Name' value={formData.name} onChange={onChange('name')} align="center" />
+      <TextField name='Email' value={formData.email} onChange={onChange('email')} align="center" />
+      <TextField name='Password' value={formData.password} onChange={onChange('password')} hide align="center" />
+      <TextField name='Confirm Password' value={formData.password2} onChange={onChange('password2')} hide align="center" />
 
       {errors.map((e) => <FormError key={e} message={e} />)}
 

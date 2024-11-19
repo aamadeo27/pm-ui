@@ -5,7 +5,6 @@ import Button from "../Button"
 import { useNavigate } from "react-router-dom"
 import { login } from "../../api"
 import useAuth from "../../hooks/useAuth"
-import { AxiosError } from "axios"
 
 type FormData = {
   email: string
@@ -38,35 +37,25 @@ export default function Login({ onCancel }: Props){
 
   const onSubmit = useCallback(async (e?: React.FormEvent) => {
     if (e) e.preventDefault()
-
     try {
-      if (auth.csrf) {
-        try{
-          await login(
-            auth.csrf,
-            formData.email,
-            formData.password,
-          )
+      await login(
+        formData.email,
+        formData.password,
+      )
 
-          navigate('/dashboard')
-        } catch (error){
-          setError((error as AxiosError).message)
-        }
-      } else {
-        setError('No CSRF Token available')
-      }
+      navigate('/dashboard')
     } catch(error) {
-      setError((error as Error).message)
+      setError(`Login Error: ` + (error as Error).message)
       return
     }
-  }, [formData])
+  }, [formData, navigate])
 
   return <div className="flex flex-col p-5 gap-4">
     <div className="text-4xl text-center w-full my-4">
       Login
     </div>
-    <TextField name='Email' value={formData.email} onChange={onChange('email')} />
-    <TextField name='Password' value={formData.password} onChange={onChange('password')} hide/>
+    <TextField name='Email' value={formData.email} onChange={onChange('email')} align="center" />
+    <TextField name='Password' value={formData.password} onChange={onChange('password')} hide align="center" />
 
     {error && <FormError message={error} />}
 
