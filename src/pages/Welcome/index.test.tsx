@@ -4,7 +4,7 @@ import { MockedProvider } from '@apollo/client/testing'
 import { MemoryRouter } from 'react-router-dom'
 
 jest.mock('../../hooks/useAuth', () => () => ({
-  csrf: 'csrf', jwt: undefined, ready: true
+  jwt: undefined, ready: true
 }))
 
 

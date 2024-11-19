@@ -14,7 +14,7 @@ jest.mock('../../api', () => ({
   login: jest.fn(),
 }))
 jest.mock('../../hooks/useAuth', () => () => ({
-  csrf: 'csrf', jwt: undefined, ready: true
+  jwt: undefined, ready: true
 }))
 
 function renderForm(){
@@ -56,6 +56,6 @@ describe('Login Form', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Login' }));
     });
 
-    expect(mockedLogin).toHaveBeenCalledWith('csrf','user@mail.com', '1234567890')
+    expect(mockedLogin).toHaveBeenCalledWith('user@mail.com', '1234567890')
   })
 })
