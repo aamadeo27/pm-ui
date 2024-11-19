@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 export type AuthTokens = {
-  csrf?: string
   jwt?: string
   ready: boolean
 }
