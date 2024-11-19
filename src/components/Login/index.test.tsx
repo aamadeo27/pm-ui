@@ -43,7 +43,7 @@ describe('Login Form', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Login' }))
 
 
-    await waitFor(() => expect(screen.getByText('Invalid user or password')))
+    await waitFor(() => expect(screen.getByText('Login Error: Invalid user or password')))
   })
 
   it(`navigates to dashboard if login is successful`, async () => {
