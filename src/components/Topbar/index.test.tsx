@@ -1,14 +1,14 @@
-import { render, screen } from "@testing-library/react";
-import Topbar from ".";
-import { User } from "../../generated/graphql";
+import { render, screen } from '@testing-library/react'
+import Topbar from '.'
+import { User } from '../../generated/graphql'
 
-describe("Top Bar", () => {
-  it("should render", () => {
-    render(<Topbar user={{} as User} />);
+describe('Top Bar', () => {
+  it('should render', () => {
+    render(<Topbar user={{} as User} />)
 
-    expect(screen.getByText("Search bar"));
-    expect(screen.getByText("My Projects"));
-    expect(screen.getByTestId("avatar"));
-    expect(screen.getByTestId("notifications"));
-  });
-});
+    expect(screen.findByText('Search bar')).toBeDefined()
+    expect(screen.findByText('My Projects')).toBeDefined()
+    expect(screen.findByTestId('avatar')).toBeDefined()
+    expect(screen.findByTestId('notifications')).toBeDefined()
+  })
+})

@@ -1,6 +1,6 @@
 type Props = {
-  className?: string;
-};
+  className?: string
+}
 
 export default function ChevronDown({ className }: Props) {
   return (
@@ -20,5 +20,5 @@ export default function ChevronDown({ className }: Props) {
         stroke-linejoin="round"
       />
     </svg>
-  );
+  )
 }

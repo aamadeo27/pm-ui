@@ -1,19 +1,19 @@
-import { User } from "../../generated/graphql";
-import ChevronDown from "../Icons/ChevronDown";
-import NotificationsIconOutline from "../Icons/NotificationsOutline";
-import NotificationsIconSolid from "../Icons/NotificationsSolid";
+import { User } from '../../generated/graphql'
+import ChevronDown from '../Icons/ChevronDown'
+import NotificationsIconOutline from '../Icons/NotificationsOutline'
+import NotificationsIconSolid from '../Icons/NotificationsSolid'
 
 type Props = {
-  user: User;
-};
+  user: User
+}
 
 export default function Topbar({ user }: Props) {
-  console.log(user);
+  console.log(user)
   return (
     <div className="h-16 w-full border-b border-slate-800 flex">
       <div className="my-auto h-fit flex flex-row w-full">
         <div className="w-96 flex-none rounded-3xl py-2 px-5 bg-slate-700">
-          {" "}
+          {' '}
           Search bar
         </div>
         <div className="w-full flex-grow"></div>
@@ -43,5 +43,5 @@ export default function Topbar({ user }: Props) {
         </div>
       </div>
     </div>
-  );
+  )
 }

@@ -1,6 +1,6 @@
 type Props = {
-  className?: string;
-};
+  className?: string
+}
 
 export default function NotificationsIconOutline({ className }: Props) {
   return (
@@ -19,5 +19,5 @@ export default function NotificationsIconOutline({ className }: Props) {
         fill="white"
       />
     </svg>
-  );
+  )
 }

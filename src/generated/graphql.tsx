@@ -1,102 +1,102 @@
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
+import { gql } from '@apollo/client'
+import * as Apollo from '@apollo/client'
+export type Maybe<T> = T | null
+export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
+  [K in keyof T]: T[K]
+}
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
+  [SubKey in K]?: Maybe<T[SubKey]>
+}
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
+  [SubKey in K]: Maybe<T[SubKey]>
+}
 export type MakeEmpty<
   T extends { [key: string]: unknown },
   K extends keyof T,
-> = { [_ in K]?: never };
+> = { [_ in K]?: never }
 export type Incremental<T> =
   | T
   | {
-      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
-    };
-const defaultOptions = {} as const;
+      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never
+    }
+const defaultOptions = {} as const
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
-};
+  ID: { input: string; output: string }
+  String: { input: string; output: string }
+  Boolean: { input: boolean; output: boolean }
+  Int: { input: number; output: number }
+  Float: { input: number; output: number }
+}
 
 export enum AppRole {
-  Admin = "admin",
-  ProjectManager = "project_manager",
-  TeamMember = "team_member",
+  Admin = 'admin',
+  ProjectManager = 'project_manager',
+  TeamMember = 'team_member',
 }
 
 export type Mutation = {
-  __typename?: "Mutation";
-  create_user?: Maybe<User>;
-};
+  __typename?: 'Mutation'
+  create_user?: Maybe<User>
+}
 
 export type MutationCreate_UserArgs = {
-  email: Scalars["String"]["input"];
-  name: Scalars["String"]["input"];
-  password: Scalars["String"]["input"];
-};
+  email: Scalars['String']['input']
+  name: Scalars['String']['input']
+  password: Scalars['String']['input']
+}
 
 export type Query = {
-  __typename?: "Query";
-  current_user?: Maybe<User>;
-};
+  __typename?: 'Query'
+  current_user?: Maybe<User>
+}
 
 export type User = {
-  __typename?: "User";
-  active: Scalars["Boolean"]["output"];
-  email: Scalars["String"]["output"];
-  id: Scalars["Int"]["output"];
-  name: Scalars["String"]["output"];
-  role: AppRole;
-};
+  __typename?: 'User'
+  active: Scalars['Boolean']['output']
+  email: Scalars['String']['output']
+  id: Scalars['Int']['output']
+  name: Scalars['String']['output']
+  role: AppRole
+}
 
 export type UserCreationInput = {
-  email: Scalars["String"]["input"];
-  name: Scalars["String"]["input"];
-  password: Scalars["String"]["input"];
-};
+  email: Scalars['String']['input']
+  name: Scalars['String']['input']
+  password: Scalars['String']['input']
+}
 
 export type CreateUserMutationVariables = Exact<{
-  email: Scalars["String"]["input"];
-  name: Scalars["String"]["input"];
-  password: Scalars["String"]["input"];
-}>;
+  email: Scalars['String']['input']
+  name: Scalars['String']['input']
+  password: Scalars['String']['input']
+}>
 
 export type CreateUserMutation = {
-  __typename?: "Mutation";
+  __typename?: 'Mutation'
   create_user?: {
-    __typename?: "User";
-    id: number;
-    name: string;
-    email: string;
-    active: boolean;
-  } | null;
-};
+    __typename?: 'User'
+    id: number
+    name: string
+    email: string
+    active: boolean
+  } | null
+}
 
-export type GetUserQueryVariables = Exact<{ [key: string]: never }>;
+export type GetUserQueryVariables = Exact<{ [key: string]: never }>
 
 export type GetUserQuery = {
-  __typename?: "Query";
+  __typename?: 'Query'
   current_user?: {
-    __typename?: "User";
-    id: number;
-    name: string;
-    email: string;
-    role: AppRole;
-    active: boolean;
-  } | null;
-};
+    __typename?: 'User'
+    id: number
+    name: string
+    email: string
+    role: AppRole
+    active: boolean
+  } | null
+}
 
 export const CreateUserDocument = gql`
   mutation CreateUser($email: String!, $name: String!, $password: String!) {
@@ -107,11 +107,11 @@ export const CreateUserDocument = gql`
       active
     }
   }
-`;
+`
 export type CreateUserMutationFn = Apollo.MutationFunction<
   CreateUserMutation,
   CreateUserMutationVariables
->;
+>
 
 /**
  * __useCreateUserMutation__
@@ -138,21 +138,20 @@ export function useCreateUserMutation(
     CreateUserMutationVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions }
   return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(
     CreateUserDocument,
     options,
-  );
+  )
 }
 export type CreateUserMutationHookResult = ReturnType<
   typeof useCreateUserMutation
->;
-export type CreateUserMutationResult =
-  Apollo.MutationResult<CreateUserMutation>;
+>
+export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<
   CreateUserMutation,
   CreateUserMutationVariables
->;
+>
 export const GetUserDocument = gql`
   query GetUser {
     current_user {
@@ -163,7 +162,7 @@ export const GetUserDocument = gql`
       active
     }
   }
-`;
+`
 
 /**
  * __useGetUserQuery__
@@ -183,11 +182,11 @@ export const GetUserDocument = gql`
 export function useGetUserQuery(
   baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions }
   return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(
     GetUserDocument,
     options,
-  );
+  )
 }
 export function useGetUserLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
@@ -195,11 +194,11 @@ export function useGetUserLazyQuery(
     GetUserQueryVariables
   >,
 ) {
-  const options = { ...defaultOptions, ...baseOptions };
+  const options = { ...defaultOptions, ...baseOptions }
   return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(
     GetUserDocument,
     options,
-  );
+  )
 }
 export function useGetUserSuspenseQuery(
   baseOptions?:
@@ -209,18 +208,18 @@ export function useGetUserSuspenseQuery(
   const options =
     baseOptions === Apollo.skipToken
       ? baseOptions
-      : { ...defaultOptions, ...baseOptions };
+      : { ...defaultOptions, ...baseOptions }
   return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(
     GetUserDocument,
     options,
-  );
+  )
 }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>
 export type GetUserSuspenseQueryHookResult = ReturnType<
   typeof useGetUserSuspenseQuery
->;
+>
 export type GetUserQueryResult = Apollo.QueryResult<
   GetUserQuery,
   GetUserQueryVariables
->;
+>

@@ -1,6 +1,6 @@
 type Props = {
-  className?: string;
-};
+  className?: string
+}
 
 export default function NotificationsIconSolid({ className }: Props) {
   return (
@@ -19,5 +19,5 @@ export default function NotificationsIconSolid({ className }: Props) {
         fill="white"
       />
     </svg>
-  );
+  )
 }

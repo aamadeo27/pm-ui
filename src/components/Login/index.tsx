@@ -1,57 +1,57 @@
-import { useCallback, useState } from "react";
-import TextField from "../TextField";
-import FormError from "../FormError";
-import Button from "../Button";
-import { useNavigate } from "react-router-dom";
-import { login } from "../../api";
-import useAuth from "../../hooks/useAuth";
+import { useCallback, useState } from 'react'
+import TextField from '../TextField'
+import FormError from '../FormError'
+import Button from '../Button'
+import { useNavigate } from 'react-router-dom'
+import { login } from '../../api'
+import useAuth from '../../hooks/useAuth'
 
 type FormData = {
-  email: string;
-  password: string;
-};
+  email: string
+  password: string
+}
 
 const EMPTY_FORM = {
-  email: "",
-  password: "",
-};
+  email: '',
+  password: '',
+}
 
 type Props = {
-  onCancel: () => void;
-};
+  onCancel: () => void
+}
 
 export default function Login({ onCancel }: Props) {
-  const [tokens, setTokens] = useAuth();
-  const [formData, setFormData] = useState<FormData>(EMPTY_FORM);
-  const [error, setError] = useState<string>();
-  const navigate = useNavigate();
+  const [tokens, setTokens] = useAuth()
+  const [formData, setFormData] = useState<FormData>(EMPTY_FORM)
+  const [error, setError] = useState<string>()
+  const navigate = useNavigate()
 
   const onCancelForm = useCallback(() => {
-    setFormData(EMPTY_FORM);
-    onCancel();
-  }, [onCancel]);
+    setFormData(EMPTY_FORM)
+    onCancel()
+  }, [onCancel])
 
   const onChange = useCallback(
     (field: string) => (value: string) =>
       setFormData((prev) => ({ ...prev, [field]: value })),
     [setFormData],
-  );
+  )
 
   const onSubmit = useCallback(
     async (e?: React.FormEvent) => {
-      if (e) e.preventDefault();
+      if (e) e.preventDefault()
       try {
-        const { jwt } = await login(formData.email, formData.password);
+        const { jwt } = await login(formData.email, formData.password)
 
-        setTokens({ jwt });
-        navigate("/dashboard");
+        setTokens({ jwt })
+        navigate('/dashboard')
       } catch (error) {
-        setError(`Login Error: ` + (error as Error).message);
-        return;
+        setError(`Login Error: ` + (error as Error).message)
+        return
       }
     },
     [formData, navigate, setTokens],
-  );
+  )
 
   return (
     <div className="flex flex-col p-5 gap-4">
@@ -59,13 +59,13 @@ export default function Login({ onCancel }: Props) {
       <TextField
         name="Email"
         value={formData.email}
-        onChange={onChange("email")}
+        onChange={onChange('email')}
         align="center"
       />
       <TextField
         name="Password"
         value={formData.password}
-        onChange={onChange("password")}
+        onChange={onChange('password')}
         hide
         align="center"
       />
@@ -81,5 +81,5 @@ export default function Login({ onCancel }: Props) {
         </Button>
       </div>
     </div>
-  );
+  )
 }

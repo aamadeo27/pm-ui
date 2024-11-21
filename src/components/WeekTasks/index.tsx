@@ -1,3 +1,3 @@
 export default function WeekTasks() {
-  return <div></div>;
+  return <div></div>
 }

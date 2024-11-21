@@ -1,26 +1,26 @@
-import axios from "axios";
+import axios from 'axios'
 
 const client = axios.create({
-  baseURL: "http://localhost:3000/v1",
+  baseURL: 'http://localhost:3000/v1',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-});
+})
 
 export const login = async (email: string, password: string) => {
   const response = await client.post(
-    "/auth",
+    '/auth',
     {
       email,
       password,
     },
     {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       withCredentials: true,
     },
-  );
+  )
 
-  return response.data as { jwt: string };
-};
+  return response.data as { jwt: string }
+}

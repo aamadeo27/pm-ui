@@ -1,7 +1,7 @@
-import Page, { PageContentProps } from "../../components/Page";
+import Page, { PageContentProps } from '../../components/Page'
 
 function Dashboard({ user }: PageContentProps) {
-  console.log("Userid: ", user.id);
+  console.log('Userid: ', user.id)
 
   return (
     <div className="py-5 flex flex-col gap-5 w-full h-full">
@@ -17,9 +17,9 @@ function Dashboard({ user }: PageContentProps) {
         <div>Task 3</div>
       </div>
     </div>
-  );
+  )
 }
 
 export default function DashboardPage() {
-  return <Page PageContent={Dashboard} />;
+  return <Page PageContent={Dashboard} />
 }
