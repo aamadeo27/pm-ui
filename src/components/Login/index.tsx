@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react'
 import TextField from '../TextField'
 import FormError from '../FormError'
 import Button from '../Button'
-import { useNavigate } from 'react-router-dom'
 import { login } from '../../api'
 import useAuth from '../../hooks/useAuth'
 
@@ -24,7 +23,6 @@ export default function Login({ onCancel }: Props) {
   const [tokens, setTokens] = useAuth()
   const [formData, setFormData] = useState<FormData>(EMPTY_FORM)
   const [error, setError] = useState<string>()
-  const navigate = useNavigate()
 
   const onCancelForm = useCallback(() => {
     setFormData(EMPTY_FORM)
@@ -44,13 +42,13 @@ export default function Login({ onCancel }: Props) {
         const { jwt } = await login(formData.email, formData.password)
 
         setTokens({ jwt })
-        navigate('/dashboard')
+        location.href = '/dashboard'
       } catch (error) {
         setError(`Login Error: ` + (error as Error).message)
         return
       }
     },
-    [formData, navigate, setTokens],
+    [formData, setTokens],
   )
 
   return (

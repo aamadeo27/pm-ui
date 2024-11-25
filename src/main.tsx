@@ -14,31 +14,43 @@ function ShellElement({ title }: { title: string }) {
 
 function App() {
   const [auth] = useAuth()
-  const client = useMemo(() => {
-    if (!auth.ready) return null
+  const { client, authenticated } = useMemo(() => {
+    if (!auth.ready) return { client: null, authenticated: false }
 
-    return createApolloClient(auth)
+    return {
+      client: createApolloClient(auth),
+      authenticated: !!auth.jwt,
+    }
   }, [auth])
 
   if (!client) return 'Loading...'
+
+  console.log('Authenticated', authenticated)
 
   return (
     <ApolloProvider client={client}>
       <StrictMode>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<WelcomePage />} />
-            <Route
-              path="/projects"
-              element={<ShellElement title="Projects" />}
-            />
-            <Route path="/tasks" element={<ShellElement title="Tasks" />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/profile" element={<ShellElement title="Profile" />} />
-            <Route
-              path="*"
-              element={<ShellElement title="Route Not Found" />}
-            />
+            <Route path={authenticated ? '/' : '*'} element={<WelcomePage />} />
+            {authenticated && (
+              <>
+                <Route
+                  path="/projects"
+                  element={<ShellElement title="Projects" />}
+                />
+                <Route path="/teams" element={<ShellElement title="Teams" />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
+                <Route
+                  path="/user/:id"
+                  element={<ShellElement title="Profile" />}
+                />
+                <Route
+                  path="*"
+                  element={<ShellElement title="Route Not Found" />}
+                />
+              </>
+            )}
           </Routes>
         </BrowserRouter>
       </StrictMode>
