@@ -3,10 +3,13 @@ import WelcomePage from '.'
 import { MockedProvider } from '@apollo/client/testing'
 import { MemoryRouter } from 'react-router-dom'
 
-jest.mock('../../hooks/useAuth', () => () => ({
-  jwt: undefined,
-  ready: true,
-}))
+jest.mock('../../hooks/useAuth', () => () => [
+  {
+    jwt: undefined,
+    ready: true,
+  },
+  () => null,
+])
 
 describe('Welcome Page', () => {
   it('renders correctly', () => {

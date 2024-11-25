@@ -12,10 +12,13 @@ jest.mock('../../api', () => ({
   __esModule: true,
   login: jest.fn(),
 }))
-jest.mock('../../hooks/useAuth', () => () => ({
-  jwt: undefined,
-  ready: true,
-}))
+jest.mock('../../hooks/useAuth', () => () => [
+  {
+    jwt: undefined,
+    ready: true,
+  },
+  () => null,
+])
 
 function renderForm() {
   return render(
