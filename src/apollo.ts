@@ -1,15 +1,23 @@
-import { HttpLink, ApolloClient, from, InMemoryCache, ApolloLink } from '@apollo/client'
+import {
+  HttpLink,
+  ApolloClient,
+  from,
+  InMemoryCache,
+  ApolloLink,
+} from '@apollo/client'
 import { onError } from '@apollo/client/link/error'
 import { AuthTokens } from './hooks/useAuth'
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if(graphQLErrors) {
+  if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
-      console.error(`[GraphqlError] Message: ${message}, Location: ${locations}, Path: ${path}`)
+      console.error(
+        `[GraphqlError] Message: ${message}, Location: ${locations}, Path: ${path}`,
+      )
     })
   }
 
-  if(networkError){
+  if (networkError) {
     console.error(`[NetworkError] ${networkError}`)
   }
 })
@@ -19,18 +27,16 @@ const httpLink = new HttpLink({
   credentials: 'include',
 })
 
-export default function createClient(auth: AuthTokens){
+export default function createClient(auth: AuthTokens) {
   const authLink = new ApolloLink((operation, forward) => {
-    
     operation.setContext(({ headers = {} }) => ({
       headers: {
         ...headers,
-        ...( auth.jwt ? { Authorization: `Bearer ${auth.jwt}` } : {}),
+        ...(auth.jwt ? { Authorization: `Bearer ${auth.jwt}` } : {}),
       },
-    }));
-    return forward(operation);
+    }))
+    return forward(operation)
   })
-      
 
   return new ApolloClient({
     link: from([errorLink, authLink, httpLink]),
@@ -38,4 +44,3 @@ export default function createClient(auth: AuthTokens){
     credentials: 'include',
   })
 }
-

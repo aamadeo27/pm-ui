@@ -3,10 +3,13 @@ import WelcomePage from '.'
 import { MockedProvider } from '@apollo/client/testing'
 import { MemoryRouter } from 'react-router-dom'
 
-jest.mock('../../hooks/useAuth', () => () => ({
-  jwt: undefined, ready: true
-}))
-
+jest.mock('../../hooks/useAuth', () => () => [
+  {
+    jwt: undefined,
+    ready: true,
+  },
+  () => null,
+])
 
 describe('Welcome Page', () => {
   it('renders correctly', () => {
@@ -15,11 +18,14 @@ describe('Welcome Page', () => {
     expect(screen.getByText('TaskNest')).toBeDefined()
     expect(screen.getByRole('button', { name: 'Sign Up' })).toBeDefined()
     expect(screen.getByRole('button', { name: 'Login' })).toBeDefined()
-
   })
 
   it('lets you go to sign up page', () => {
-    render(<MockedProvider mocks={[]} addTypename={false}><WelcomePage /></MockedProvider>)
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <WelcomePage />
+      </MockedProvider>,
+    )
 
     fireEvent.click(screen.getByRole('button', { name: 'Sign Up' }))
 
@@ -30,7 +36,13 @@ describe('Welcome Page', () => {
   })
 
   it('lets you go to login page', () => {
-    render(<MockedProvider mocks={[]} addTypename={false}><MemoryRouter><WelcomePage /></MemoryRouter></MockedProvider>)
+    render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <MemoryRouter>
+          <WelcomePage />
+        </MemoryRouter>
+      </MockedProvider>,
+    )
 
     fireEvent.click(screen.getByRole('button', { name: 'Login' }))
 

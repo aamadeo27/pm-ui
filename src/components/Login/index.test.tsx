@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router-dom'
 import { login } from '../../api'
 import { AxiosError } from 'axios'
 
-
 const onCancel = jest.fn()
 const mockedLogin = jest.mocked(login)
 
@@ -13,19 +12,24 @@ jest.mock('../../api', () => ({
   __esModule: true,
   login: jest.fn(),
 }))
-jest.mock('../../hooks/useAuth', () => () => ({
-  jwt: undefined, ready: true
-}))
+jest.mock('../../hooks/useAuth', () => () => [
+  {
+    jwt: undefined,
+    ready: true,
+  },
+  () => null,
+])
 
-function renderForm(){
+function renderForm() {
   return render(
-      <MemoryRouter>
-        <Login onCancel={onCancel} />
-      </MemoryRouter>)
+    <MemoryRouter>
+      <Login onCancel={onCancel} />
+    </MemoryRouter>,
+  )
 }
 
 describe('Login Form', () => {
-  it (`Renders the form correctly`, () => {
+  it(`Renders the form correctly`, () => {
     renderForm()
 
     expect(screen.getByRole('textbox', { name: 'Email' })).toBeDefined()
@@ -35,26 +39,37 @@ describe('Login Form', () => {
   it(`shows error when authentication fails`, async () => {
     renderForm()
 
-    mockedLogin.mockRejectedValueOnce(new AxiosError('Invalid user or password'))
+    mockedLogin.mockRejectedValueOnce(
+      new AxiosError('Invalid user or password'),
+    )
 
-    await userEvent.type(screen.getByRole('textbox', { name: 'Email'}), 'user@mail.com')
+    await userEvent.type(
+      screen.getByRole('textbox', { name: 'Email' }),
+      'user@mail.com',
+    )
     await userEvent.type(screen.getByLabelText('Password'), 'invalid-password')
-    
+
     fireEvent.click(screen.getByRole('button', { name: 'Login' }))
 
-
-    await waitFor(() => expect(screen.getByText('Login Error: Invalid user or password')))
+    await waitFor(() =>
+      expect(
+        screen.findByText('Login Error: Invalid user or password'),
+      ).toBeDefined(),
+    )
   })
 
   it(`navigates to dashboard if login is successful`, async () => {
     renderForm()
-    
-    await userEvent.type(screen.getByRole('textbox', { name: 'Email'}), 'user@mail.com')
+
+    await userEvent.type(
+      screen.getByRole('textbox', { name: 'Email' }),
+      'user@mail.com',
+    )
     await userEvent.type(screen.getByLabelText('Password'), '1234567890')
 
     await act(async () => {
-      fireEvent.click(screen.getByRole('button', { name: 'Login' }));
-    });
+      fireEvent.click(screen.getByRole('button', { name: 'Login' }))
+    })
 
     expect(mockedLogin).toHaveBeenCalledWith('user@mail.com', '1234567890')
   })

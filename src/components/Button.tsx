@@ -1,4 +1,4 @@
-import classnames from "classnames"
+import classnames from 'classnames'
 
 type Props = {
   children: React.ReactNode
@@ -13,18 +13,23 @@ const COLORS = {
     bg: 'bg-red-500',
     bgInactive: 'bg-red-200',
     text: 'text-white',
-    textInactive: 'text-white'
+    textInactive: 'text-white',
   },
   secondary: {
     bg: 'bg-white',
     bgInactive: 'bg-slate-200',
     text: 'text-black',
-    textInactive: 'text-salte-700'
-  }
+    textInactive: 'text-salte-700',
+  },
 }
 
-
-export default function({ children, onClick, fullwidth, disabled, type = 'primary' }: Props){
+export default function ({
+  children,
+  onClick,
+  fullwidth,
+  disabled,
+  type = 'primary',
+}: Props) {
   const background = !disabled ? COLORS[type].bg : COLORS[type].bgInactive
   const text = 'font-semibold text-center text-lg mx-auto'
   const classes = classnames(
@@ -32,7 +37,15 @@ export default function({ children, onClick, fullwidth, disabled, type = 'primar
     background,
     text,
     !disabled ? COLORS[type].text : COLORS[type].textInactive,
-    { 'w-fit' : !fullwidth }
+    { 'w-fit': !fullwidth },
   )
-  return <div role="button" onClick={!disabled ? onClick : undefined} className={classes}>{children}</div>
+  return (
+    <div
+      role="button"
+      onClick={!disabled ? onClick : undefined}
+      className={classes}
+    >
+      {children}
+    </div>
+  )
 }
