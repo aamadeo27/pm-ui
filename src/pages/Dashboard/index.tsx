@@ -1,4 +1,4 @@
-import UserPage, { PageContentProps } from '../../components/Page'
+import UserPage, { PageContentProps } from '../../components/UserPage'
 import CircularProgress from '../../components/Progress'
 import TaskList from '../../components/Tasks'
 import Weekbar from '../../components/Weekbar'

@@ -7,10 +7,8 @@ import createApolloClient from './apollo'
 import WelcomePage from './pages/Welcome'
 import useAuth from './hooks/useAuth'
 import DashboardPage from './pages/Dashboard'
-
-function ShellElement({ title }: { title: string }) {
-  return <div>{title}</div>
-}
+import UnderConstruction from './components/UnderConstruction'
+import NotFound from './components/NotFound'
 
 function App() {
   const [auth] = useAuth()
@@ -25,8 +23,6 @@ function App() {
 
   if (!client) return 'Loading...'
 
-  console.log('Authenticated', authenticated)
-
   return (
     <ApolloProvider client={client}>
       <StrictMode>
@@ -35,20 +31,11 @@ function App() {
             <Route path={authenticated ? '/' : '*'} element={<WelcomePage />} />
             {authenticated && (
               <>
-                <Route
-                  path="/projects"
-                  element={<ShellElement title="Projects" />}
-                />
-                <Route path="/teams" element={<ShellElement title="Teams" />} />
+                <Route path="/projects" element={<UnderConstruction />} />
+                <Route path="/teams" element={<UnderConstruction />} />
                 <Route path="/dashboard" element={<DashboardPage />} />
-                <Route
-                  path="/user/:id"
-                  element={<ShellElement title="Profile" />}
-                />
-                <Route
-                  path="*"
-                  element={<ShellElement title="Route Not Found" />}
-                />
+                <Route path="/user/:id" element={<UnderConstruction />} />
+                <Route path="*" element={<NotFound />} />
               </>
             )}
           </Routes>

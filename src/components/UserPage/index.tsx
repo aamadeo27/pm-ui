@@ -3,6 +3,7 @@ import Sidebar from '../Sidebar'
 import Topbar from '../Topbar'
 import { useGetUserQuery, User } from '../../generated/graphql'
 import { useNavigate } from 'react-router-dom'
+import Loading from '../Loading'
 
 type Props = {
   PageContent: React.FC<{ user: User }>
@@ -16,7 +17,7 @@ export default function UserPage({ PageContent }: Props) {
   const { data, loading, error } = useGetUserQuery()
   const navigate = useNavigate()
 
-  if (loading) return 'loading ...'
+  if (loading) return <Loading />
 
   if (error) return `Error: ${error.message}`
 
