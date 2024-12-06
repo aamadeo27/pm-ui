@@ -1,5 +1,5 @@
-mutation CreateUser($email: String!, $name: String!, $password: String!) {
-  create_user(email: $email, name: $name, password: $password) {
+mutation CreateUser($args: UserCreateInput!) {
+  create_user(args: $args) {
     id
     name
     email

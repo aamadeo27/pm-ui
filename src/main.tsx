@@ -11,6 +11,10 @@ import UnderConstruction from './components/UnderConstruction'
 import NotFound from './components/NotFound'
 
 function App() {
+  if (import.meta.env.DEV) {
+    console.log('Environment Variables', import.meta.env)
+  }
+
   const [auth] = useAuth()
   const { client, authenticated } = useMemo(() => {
     if (!auth.ready) return { client: null, authenticated: false }

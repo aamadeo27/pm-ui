@@ -55,9 +55,12 @@ export default function SignUp({ onCancel, onSuccess }: Props) {
       try {
         await createUser({
           variables: {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
+            args: {
+              name: formData.name,
+              email: formData.email,
+              password: formData.password,
+              team_id: 1,
+            },
           },
         })
 

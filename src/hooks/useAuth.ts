@@ -9,13 +9,13 @@ export default function useAuth() {
   const [tokens, setTokens] = useState<AuthTokens>({ ready: false })
 
   useEffect(() => {
-    fetch(`http://localhost:3000/v1/auth`, { credentials: 'include' }).then(
-      async (r) => {
-        const data = await r.json()
+    fetch(`${import.meta.env.VITE_API_BASEURL}/v1/auth`, {
+      credentials: 'include',
+    }).then(async (r) => {
+      const data = await r.json()
 
-        setTokens({ ...data, ready: true })
-      },
-    )
+      setTokens({ ...data, ready: true })
+    })
   }, [])
 
   return [
