@@ -2,9 +2,14 @@ import UserPage, { PageContentProps } from '../../components/UserPage'
 import CircularProgress from '../../components/Progress'
 import TaskList from '../../components/Tasks'
 import Weekbar from '../../components/Weekbar'
+import { AppRole } from '../../generated/graphql'
+import ManagerDashboard from './ManagerDashboard'
 
 function Dashboard({ user }: PageContentProps) {
-  console.log('Userid: ', user.id)
+  if (user.role === AppRole.Admin) return 'Admin Dashboard'
+  if (user.role === AppRole.ProjectManager) {
+    return <ManagerDashboard user={user} />
+  }
 
   return (
     <div className="py-5 flex flex-col gap-5 w-full h-full">

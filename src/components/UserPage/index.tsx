@@ -1,25 +1,32 @@
 import classNames from 'classnames'
 import Sidebar from '../Sidebar'
-import Topbar from '../Topbar'
-import { useGetUserQuery, User } from '../../generated/graphql'
+import Topbar, { CurrentUser } from '../Topbar'
+import { useGetCurrentUserQuery } from '../../generated/graphql'
 import { useNavigate } from 'react-router-dom'
 import Loading from '../Loading'
 
-type Props = {
-  PageContent: React.FC<{ user: User }>
+export type PageContentProps = {
+  user: CurrentUser
 }
 
-export type PageContentProps = {
-  user: User
+type Props = {
+  PageContent: React.FC<PageContentProps>
 }
 
 export default function UserPage({ PageContent }: Props) {
-  const { data, loading, error } = useGetUserQuery()
+  const { data, loading, error } = useGetCurrentUserQuery()
   const navigate = useNavigate()
 
   if (loading) return <Loading />
 
-  if (error) return `Error: ${error.message}`
+  if (error) {
+    if (error.message.match(/Unauthorized access/)) {
+      navigate('/')
+      return
+    }
+
+    return `Error: ${error.message}`
+  }
 
   if (!data?.current_user) {
     navigate('/')
