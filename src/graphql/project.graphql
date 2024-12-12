@@ -1,0 +1,23 @@
+
+mutation CreateProject($name: String!) {
+  create_project(name: $name) {
+    id
+    name
+  }
+}
+
+mutation UpdateProject($args: ProjectUpdateInput!) { 
+  update_project(args: $args){ 
+    id
+    name
+    thumbnail
+  }
+}
+
+mutation DeleteProject($id: Int!) { 
+  delete_project(id: $id){ 
+    id 
+    name
+    team_id
+  } 
+}

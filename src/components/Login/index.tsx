@@ -58,11 +58,13 @@ export default function Login({ onCancel }: Props) {
         name="Email"
         value={formData.email}
         onChange={onChange('email')}
+        onEnter={onSubmit}
         align="center"
       />
       <TextField
         name="Password"
         value={formData.password}
+        onEnter={onSubmit}
         onChange={onChange('password')}
         hide
         align="center"

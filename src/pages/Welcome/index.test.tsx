@@ -11,6 +11,11 @@ jest.mock('../../hooks/useAuth', () => () => [
   () => null,
 ])
 
+jest.mock('../../api', () => ({
+  __esModule: true,
+  login: jest.fn(),
+}))
+
 describe('Welcome Page', () => {
   it('renders correctly', () => {
     render(<WelcomePage />)

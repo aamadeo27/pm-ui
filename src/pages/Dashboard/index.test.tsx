@@ -2,19 +2,7 @@ import { act, render, screen } from '@testing-library/react'
 import DashboardPage from '.'
 import { MockedProvider } from '@apollo/client/testing'
 import { MemoryRouter } from 'react-router-dom'
-import { gql } from '@apollo/client'
-
-const GET_USER = gql`
-  query GetUser {
-    current_user {
-      id
-      name
-      email
-      role
-      active
-    }
-  }
-`
+import { GetCurrentUserDocument } from '../../generated/graphql'
 
 function MockedDahsboard() {
   return (
@@ -22,15 +10,17 @@ function MockedDahsboard() {
       addTypename={false}
       mocks={[
         {
-          request: { query: GET_USER },
+          request: { query: GetCurrentUserDocument },
           result: {
             data: {
               current_user: {
                 id: 1,
                 name: 'user',
+                avatar: 'avatar',
                 email: 'user@mail.com',
                 role: 'team_member',
                 active: true,
+                team_id: 1,
               },
             },
           },

@@ -1,18 +1,15 @@
 mutation CreateUser($args: UserCreateInput!) {
-  create_user(args: $args) {
-    id
-    name
-    email
-    active
-  }
+  create_user(args: $args)
 }
 
-query GetUser {
+query GetCurrentUser {
   current_user {
     id
     name
+    avatar_url
     email
     role
     active
+    team_id
   }
 }

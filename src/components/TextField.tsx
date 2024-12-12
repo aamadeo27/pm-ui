@@ -10,26 +10,33 @@ type Props = {
   name: string
   value: string
   onChange: (v: string) => void
+  onEnter?: () => void
   error?: string
   hide?: boolean
   align?: 'center' | 'left' | 'right'
+  fullwidth?: boolean
 }
 export default function TextField({
   value,
   onChange,
+  onEnter,
   name,
   hide,
   align = 'left',
+  fullwidth,
 }: Props) {
   const classes = classNames(
-    'py-1 px-2 rounded-xl bg-slate-900 border-slate-100 border w-full h-fit my-auto',
+    'p-3 rounded-xl bg-slate-900 border-slate-500 border w-full h-fit my-auto',
     TEXT_ALIGN[align],
   )
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={classNames('flex flex-col gap-2', { 'w-full': fullwidth })}>
       <label
-        className="w-full h-full pt-1 font-semibold text-center"
+        className={classNames(
+          'w-full h-full pt-1 text-slate-300',
+          TEXT_ALIGN[align],
+        )}
         htmlFor={name}
       >
         {name}
@@ -39,6 +46,11 @@ export default function TextField({
         name={name}
         className={classes}
         value={value}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && onEnter) {
+            onEnter()
+          }
+        }}
         onChange={(e) => onChange(e.target.value)}
         type={hide ? 'password' : 'text'}
       />

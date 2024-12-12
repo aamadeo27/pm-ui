@@ -8,13 +8,8 @@ const onCancel = jest.fn()
 const onSuccess = jest.fn()
 
 const CREATE_USER = gql`
-  mutation CreateUser($email: String!, $name: String!, $password: String!) {
-    create_user(email: $email, name: $name, password: $password) {
-      id
-      name
-      email
-      active
-    }
+  mutation CreateUser($args: UserCreateInput!) {
+    create_user(args: $args)
   }
 `
 
@@ -23,19 +18,17 @@ const mocks = [
     request: {
       query: CREATE_USER,
       variables: {
-        name: 'user',
-        email: 'user@mail.com',
-        password: '1234567890',
+        args: {
+          name: 'user',
+          email: 'user@mail.com',
+          password: '1234567890',
+          team_id: 1,
+        },
       },
     },
     result: {
       data: {
-        create_user: {
-          id: 1,
-          name: 'user',
-          email: 'user@mail.com',
-          active: false,
-        },
+        create_user: true,
       },
     },
   },

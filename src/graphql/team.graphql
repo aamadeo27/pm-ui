@@ -1,0 +1,31 @@
+
+query GetTeam($id: Int!) {
+  team(id: $id) {
+    id
+    name
+    thumbnail
+    
+    members {
+      id
+      name
+      avatar_url
+      role
+    }
+
+    projects {
+      id
+      name
+      created_at
+      completed_at
+      thumbnail
+      tasks {
+        id
+        name
+        thumbnail
+        created_at
+        completed_at
+        assignee_id
+      }
+    }
+  }
+}

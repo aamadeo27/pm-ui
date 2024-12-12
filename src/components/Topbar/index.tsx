@@ -1,14 +1,16 @@
-import { User } from '../../generated/graphql'
+import { GetCurrentUserQuery } from '../../generated/graphql'
+import Avatar from '../Avatar'
 import IconButton from '../IconButton'
 import NotificationsIconOutline from '../Icons/NotificationsOutline'
 import NotificationsIconSolid from '../Icons/NotificationsSolid'
 
+export type CurrentUser = GetCurrentUserQuery['current_user']
+
 type Props = {
-  user: User
+  user: CurrentUser
 }
 
 export default function Topbar({ user }: Props) {
-  console.log(user)
   return (
     <div className="h-fit w-full border-b border-slate-800 flex py-5">
       <div className="my-auto h-fit flex flex-row w-full">
@@ -30,12 +32,7 @@ export default function Topbar({ user }: Props) {
         </div>
 
         <div className="w-16 flex-none my-auto cursor-pointer">
-          <img
-            src="./logo.png"
-            alt="avatar"
-            className="w-10 h-10 mx-auto"
-            data-testid="avatar"
-          />
+          <Avatar user={user} />
         </div>
       </div>
     </div>

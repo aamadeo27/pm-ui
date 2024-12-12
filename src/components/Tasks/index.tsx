@@ -89,9 +89,9 @@ const LIST_DUMMY: TaskType[] = [
 export default function TaskList() {
   const tasks = LIST_DUMMY.map((t) => <TaskCard key={t.name} task={t} />)
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full h-full">
       <Header>Tasks</Header>
-      <div className="w-full rounded-3xl bg-slate-800 px-5 gap-5 divide-y">
+      <div className="w-full h-full rounded-3xl bg-slate-800 px-5 gap-5 divide-y">
         {tasks}
       </div>
     </div>
